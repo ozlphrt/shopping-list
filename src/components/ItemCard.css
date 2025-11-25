@@ -1,0 +1,403 @@
+.item-card-wrapper {
+  position: relative;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+
+.item-card-swipe-indicators {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.item-card-swipe-indicator {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.item-card-swipe-indicator .material-symbols-outlined {
+  font-size: 1.5rem;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.item-card-swipe-complete {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  justify-content: flex-start;
+  padding-left: 1.5rem;
+}
+
+.item-card-swipe-delete {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ffffff;
+  justify-content: flex-end;
+  padding-right: 1.5rem;
+}
+
+.item-card-swipe-delete .material-symbols-outlined {
+  background: #ef4444;
+  border-radius: 50%;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.item-card-wrapper.swiping-right .item-card-swipe-complete {
+  opacity: 1;
+}
+
+.item-card-wrapper.swiping-left .item-card-swipe-delete {
+  opacity: 1;
+}
+
+.item-card {
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  transition: transform 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  position: relative;
+  touch-action: pan-y;
+  z-index: 1;
+}
+
+.item-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.item-card-swiping {
+  transition: none;
+}
+
+.item-card-picked {
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.item-card-deleted {
+  opacity: 0.4;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+  cursor: default;
+}
+
+.item-card-deleted:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.item-card-deleted .item-card-checkbox input[type="checkbox"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.item-card-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.item-card-checkbox-wrapper {
+  flex: 0 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+}
+
+.item-card-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #6366f1;
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(231, 229, 228, 0.4);
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.item-card-checkbox input[type="checkbox"]:checked {
+  background: #6366f1;
+  border-color: #6366f1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='white' d='M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
+  background-size: 12px 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.item-card-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.item-card-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.item-card-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e7e5e4;
+  text-decoration: none;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.item-card-picked .item-card-name {
+  color: rgba(231, 229, 228, 0.5);
+  text-decoration: line-through;
+}
+
+.item-card-description {
+  font-size: 0.875rem;
+  color: rgba(231, 229, 228, 0.5);
+  line-height: 1.25;
+  margin: 0;
+  font-weight: 400;
+}
+
+.item-card-picked .item-card-description {
+  color: rgba(231, 229, 228, 0.4);
+  text-decoration: line-through;
+}
+
+.item-card-category-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  background: rgba(231, 229, 228, 0.2);
+  border-radius: 9999px;
+  color: rgba(231, 229, 228, 0.6);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.item-card-actions {
+  display: none;
+}
+
+.item-card-action {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.item-card-action:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
+.item-card-edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.item-card-edit-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #182235;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 1.5rem;
+  z-index: 1001;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.item-card-edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.item-card-edit-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.item-card-edit-close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.item-card-edit-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.item-card-edit-input,
+.item-card-edit-textarea,
+.item-card-edit-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s;
+}
+
+.item-card-edit-input::placeholder,
+.item-card-edit-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.item-card-edit-input:focus,
+.item-card-edit-textarea:focus,
+.item-card-edit-select:focus {
+  outline: none;
+  border-color: #6366f1;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.item-card-edit-select {
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.item-card-edit-select option {
+  background: #182235;
+  color: #ffffff;
+}
+
+.item-card-edit-select {
+  cursor: pointer;
+}
+
+.item-card-edit-textarea {
+  resize: vertical;
+  min-height: 50px;
+}
+
+.item-card-edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.item-card-edit-save,
+.item-card-edit-cancel,
+.item-card-edit-delete {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.item-card-edit-save {
+  background: #6366f1;
+  color: #ffffff;
+  border-color: #6366f1;
+}
+
+.item-card-edit-save:hover {
+  background: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.item-card-edit-delete {
+  background: rgba(239, 68, 68, 0.8);
+  color: #ffffff;
+  border-color: rgba(239, 68, 68, 0.8);
+}
+
+.item-card-edit-delete:hover {
+  background: rgba(220, 38, 38, 0.9);
+  border-color: rgba(220, 38, 38, 0.9);
+}
+
+.item-card-edit-cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.item-card-edit-cancel:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
