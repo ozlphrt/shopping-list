@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Item } from '../types/item';
 import { ItemCard } from './ItemCard';
 import { useItems } from '../hooks/useItems';
 import { useI18n } from '../i18n/context';

@@ -136,8 +136,12 @@ export const ScanList = ({ onClose }: ScanListProps) => {
 
       setProcessingProgress(25);
 
-      // Convert data URL to base64 (remove data:image/...;base64, prefix)
-      const base64Image = imageData.split(',')[1];
+      // Validate image data
+      if (!imageData || !imageData.includes(',')) {
+        setError('Failed to process image');
+        setIsProcessing(false);
+        return;
+      }
 
       setProcessingProgress(50);
 
@@ -210,8 +214,8 @@ export const ScanList = ({ onClose }: ScanListProps) => {
         // Split by common delimiters and clean up
         items = content
           .split(/[,\n•\-\*]/)
-          .map(item => item.trim().replace(/^[\d\.\-\s]+/, '').trim()) // Remove leading numbers/bullets
-          .filter(item => item.length > 0 && item.length < 100); // Filter valid items
+          .map((item: string) => item.trim().replace(/^[\d\.\-\s]+/, '').trim()) // Remove leading numbers/bullets
+          .filter((item: string) => item.length > 0 && item.length < 100); // Filter valid items
       }
 
       // Filter and clean items
