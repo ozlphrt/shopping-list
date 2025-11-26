@@ -11,6 +11,7 @@ import { CreateListModal } from './components/CreateListModal';
 import { CleanupButton } from './components/CleanupButton';
 import { useItems } from './hooks/useItems';
 import { useLists } from './hooks/useLists';
+import { useTheme } from './hooks/useTheme';
 import { auth, db } from './config/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, deleteDoc } from 'firebase/firestore';
@@ -31,6 +32,7 @@ function AppContent() {
   
   const { lists, loading: listsLoading, hasOrphanedLists } = useLists();
   const { clearAll } = useItems(currentListId);
+  useTheme(); // Initialize theme
 
   useEffect(() => {
     let mounted = true;

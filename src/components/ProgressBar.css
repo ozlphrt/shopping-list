@@ -4,13 +4,13 @@
 }
 
 .progress-bar-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-card-background, rgba(255, 255, 255, 0.05));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 0.75rem;
   padding: 0.75rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-card-border, rgba(255, 255, 255, 0.1));
 }
 
 .progress-bar-header {
@@ -23,14 +23,15 @@
 .progress-bar-label {
   font-size: 1rem;
   font-weight: 500;
-  color: #e7e5e4;
+  color: var(--color-text, #e7e5e4);
   line-height: 1.5;
 }
 
 .progress-bar-text {
   font-size: 0.875rem;
   font-weight: 400;
-  color: rgba(231, 229, 228, 0.6);
+  color: var(--color-text, rgba(231, 229, 228, 0.6));
+  opacity: 0.6;
   line-height: 1.5;
 }
 
@@ -44,7 +45,7 @@
 
 .progress-bar-fill {
   height: 100%;
-  background: #6366f1;
+  background: var(--color-accent, #6366f1);
   border-radius: 9999px;
   transition: width 0.3s ease;
 }

@@ -25,5 +25,15 @@ service cloud.firestore {
       allow update: if request.auth != null && resource.data.ownerId == request.auth.uid;
       allow delete: if request.auth != null && resource.data.ownerId == request.auth.uid;
     }
+    
+    // Users collection - for storing user preferences and biometric credentials
+    match /users/{userId} {
+      // Users can read/write their own user document
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Also allow read by email for biometric lookup (when not signed in)
+      allow read: if request.auth != null && 
+        request.auth.token.email != null &&
+        resource.data.email == request.auth.token.email.lower();
+    }
   }
 }

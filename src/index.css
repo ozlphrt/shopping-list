@@ -2,6 +2,21 @@
   font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  
+  /* Default color palette - will be overridden by theme */
+  --color-primary: rgba(34, 197, 94, 1);
+  --color-secondary: rgba(248, 113, 113, 1);
+  --color-accent: rgba(99, 102, 241, 1);
+  --color-background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #1f2937 100%);
+  --color-surface: rgba(31, 41, 55, 0.95);
+  --color-text: #ffffff;
+  --color-card-background: rgba(255, 255, 255, 0.05);
+  --color-card-border: rgba(255, 255, 255, 0.1);
+  --color-card-hover: rgba(255, 255, 255, 0.1);
+  --color-input-background: rgba(0, 0, 0, 0.45);
+  --color-input-border: rgba(255, 255, 255, 0.08);
+  --color-modal-background: rgba(24, 34, 53, 0.95);
+  --color-modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
 .material-symbols-outlined {
