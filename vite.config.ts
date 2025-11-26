@@ -21,8 +21,8 @@ export default defineConfig({
         background_color: '#182235',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
-        scope: '/',
+        start_url: process.env.NODE_ENV === 'production' ? '/shopping-list/' : '/',
+        scope: process.env.NODE_ENV === 'production' ? '/shopping-list/' : '/',
         icons: []
       },
       workbox: {

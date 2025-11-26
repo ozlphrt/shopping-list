@@ -2,7 +2,7 @@
   "name": "Shopping List",
   "short_name": "Shopping",
   "description": "Real-time shared grocery shopping list",
-  "start_url": "/",
+  "start_url": "/shopping-list/",
   "display": "standalone",
   "background_color": "#182235",
   "theme_color": "#182235",
