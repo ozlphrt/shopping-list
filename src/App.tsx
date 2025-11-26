@@ -39,11 +39,13 @@ function AppContent() {
     // and again after sign-in completes
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (mounted) {
-        // Only log auth changes in development
-        if (import.meta.env.DEV) {
-          console.log('Auth state changed:', user ? `${user.email} (${user.uid})` : 'signed out');
-        }
+        console.log('Auth state changed:', user ? `${user.email} (${user.uid})` : 'signed out');
         setUser(user);
+        setLoading(false);
+      }
+    }, (error) => {
+      console.error('Auth state error:', error);
+      if (mounted) {
         setLoading(false);
       }
     });
