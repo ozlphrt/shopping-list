@@ -282,7 +282,7 @@ export const Auth = ({ currentList }: AuthProps) => {
       );
 
       if (credential && credential.id) {
-        const credentialId = arrayBufferToBase64(credential.id);
+        const credentialId = arrayBufferToBase64(credential.id as ArrayBuffer);
         
         // Save credential ID to user document
         await setDoc(doc(db, 'users', auth.currentUser.uid), {
