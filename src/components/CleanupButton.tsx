@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../config/firebase';
-import { useI18n } from '../i18n/context';
 import './CleanupButton.css';
 
 interface CleanupButtonProps {
@@ -9,7 +8,6 @@ interface CleanupButtonProps {
 }
 
 export const CleanupButton = ({ onCleanupComplete }: CleanupButtonProps) => {
-  const { t } = useI18n();
   const [isCleaning, setIsCleaning] = useState(false);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
 

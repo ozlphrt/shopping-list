@@ -1,8 +1,12 @@
 import { useItems } from '../hooks/useItems';
 import './ProgressBar.css';
 
-export const ProgressBar = () => {
-  const { items } = useItems();
+interface ProgressBarProps {
+  listId: string | null;
+}
+
+export const ProgressBar = ({ listId }: ProgressBarProps) => {
+  const { items } = useItems(listId);
   const pickedCount = items.filter(item => item.picked).length;
   const totalCount = items.length;
   const progress = totalCount > 0 ? (pickedCount / totalCount) * 100 : 0;

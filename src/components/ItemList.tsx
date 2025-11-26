@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { ItemCard } from './ItemCard';
 import { useItems } from '../hooks/useItems';
 import { useI18n } from '../i18n/context';
-import { categoryOrder, categoryEmojis } from '../data/groceryDatabase';
+import { categoryOrder } from '../data/groceryDatabase';
 import { getCategoryEmoji } from '../utils/categoryDetector';
 import './ItemList.css';
 
@@ -66,8 +66,6 @@ export const ItemList = ({ listId }: ItemListProps) => {
     });
   }, [groupedActiveItems]);
 
-  const uncheckedCount = activeItems.length;
-
   if (loading) {
     return <div className="item-list-loading">{t('app.loading')}</div>;
   }
@@ -94,7 +92,7 @@ export const ItemList = ({ listId }: ItemListProps) => {
               </div>
               <div className="item-list-items">
                 {groupedActiveItems[category].map(item => (
-                  <ItemCard key={item.id} item={item} />
+                  <ItemCard key={item.id} item={item} listId={listId} />
                 ))}
               </div>
             </div>

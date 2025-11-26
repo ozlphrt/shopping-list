@@ -7,10 +7,11 @@ import './ItemCard.css';
 
 interface ItemCardProps {
   item: Item;
+  listId: string | null;
 }
 
-export const ItemCard = ({ item }: ItemCardProps) => {
-  const { updateItem, deleteItem } = useItems();
+export const ItemCard = ({ item, listId }: ItemCardProps) => {
+  const { updateItem, deleteItem } = useItems(listId);
   const { t } = useI18n();
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
@@ -45,9 +46,6 @@ export const ItemCard = ({ item }: ItemCardProps) => {
     await deleteItem(item.id);
   };
 
-  const handleDim = async () => {
-    await updateItem(item.id, { dimmed: !item.dimmed });
-  };
 
   const handleCardClick = (e: React.MouseEvent) => {
     // Don't open edit if clicking on checkbox, delete button, or swipe backgrounds
@@ -106,7 +104,6 @@ export const ItemCard = ({ item }: ItemCardProps) => {
   };
 
   const swipeOpacity = Math.min(Math.abs(swipeOffset) / 100, 1);
-  const description = [item.quantity, item.notes].filter(Boolean).join(', ');
 
   return (
     <>

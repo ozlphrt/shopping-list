@@ -27,10 +27,9 @@ function AppContent() {
   const [showDeleteListModal, setShowDeleteListModal] = useState(false);
   const [listToDelete, setListToDelete] = useState<{ id: string; name: string } | null>(null);
   const [showListDropdown, setShowListDropdown] = useState(false);
-  const isCreatingListRef = useRef(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   
-  const { lists, loading: listsLoading, hasOrphanedLists, createList } = useLists();
+  const { lists, loading: listsLoading, hasOrphanedLists } = useLists();
   const { clearAll } = useItems(currentListId);
 
   useEffect(() => {

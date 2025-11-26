@@ -1,9 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useI18n } from '../i18n/context';
 import { ShoppingList } from '../types/list';
 import { auth } from '../config/firebase';
-import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../config/firebase';
 import './ListDropdown.css';
 
 interface ListDropdownProps {

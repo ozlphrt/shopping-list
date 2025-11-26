@@ -25,7 +25,7 @@ export const DeletedItemsSection = ({ listId }: DeletedItemsSectionProps) => {
       <h3 className="item-list-category-title item-list-deleted-title">{t('list.deleted')}</h3>
       <div className="item-list-items">
         {deletedItems.map(item => (
-          <ItemCard key={item.id} item={item} />
+          <ItemCard key={item.id} item={item} listId={listId} />
         ))}
       </div>
     </div>

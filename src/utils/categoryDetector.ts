@@ -114,7 +114,7 @@ function findBestMatch(input: string): { text: string; category: string; score: 
  * Detects category for a product name using fuzzy matching
  * Returns the category name (e.g., "Produce", "Meat & Seafood", etc.)
  */
-export const detectCategory = async (productName: string, useOnline: boolean = false): Promise<string> => {
+export const detectCategory = async (productName: string, _useOnline: boolean = false): Promise<string> => {
   if (!productName || productName.trim().length === 0) {
     return 'Other';
   }

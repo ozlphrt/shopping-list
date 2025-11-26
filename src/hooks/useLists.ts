@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { collection, query, orderBy, onSnapshot, addDoc, updateDoc, doc, Timestamp, where } from 'firebase/firestore';
+import { collection, query, onSnapshot, addDoc, updateDoc, doc, Timestamp, where } from 'firebase/firestore';
 import { db, auth } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ShoppingList } from '../types/list';

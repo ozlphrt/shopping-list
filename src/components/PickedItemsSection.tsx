@@ -23,7 +23,7 @@ export const PickedItemsSection = ({ listId }: PickedItemsSectionProps) => {
       <h3 className="item-list-category-title item-list-picked-title">{t('list.picked')}</h3>
       <div className="item-list-items">
         {pickedItems.map(item => (
-          <ItemCard key={item.id} item={item} />
+          <ItemCard key={item.id} item={item} listId={listId} />
         ))}
       </div>
     </div>

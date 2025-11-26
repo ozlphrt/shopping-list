@@ -17,7 +17,6 @@ export const ShareList = ({ listId, onClose }: ShareListProps) => {
   const [loading, setLoading] = useState(false);
 
   const currentList = lists.find(l => l.id === listId);
-  const currentUserEmail = auth.currentUser?.email || '';
 
   const handleShare = async (e: React.FormEvent) => {
     e.preventDefault();
