@@ -17,7 +17,7 @@
 }
 
 .item-card-row.item-card-deleted {
-  opacity: 0.4;
+  /* No dimming for deleted items */
 }
 
 /* Swipe backgrounds */
@@ -105,8 +105,8 @@
 }
 
 .item-card-checkbox-checked {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgb(34, 197, 94);
 }
 
 .item-card-checkbox-unchecked {
@@ -114,8 +114,8 @@
 }
 
 .item-card-checkbox-deleted {
-  border-color: rgba(239, 68, 68, 0.5);
-  background: rgba(239, 68, 68, 0.1);
+  border-color: rgb(239, 68, 68);
+  background: rgba(239, 68, 68, 0.15);
 }
 
 .item-card-checkbox-btn:disabled {
@@ -141,7 +141,7 @@
 
 .item-card-name-picked {
   text-decoration: line-through;
-  opacity: 0.4;
+  /* No dimming for picked items */
 }
 
 .item-card-name-dimmed {
