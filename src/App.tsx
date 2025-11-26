@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { I18nProvider, useI18n } from './i18n/context';
 import { ItemForm } from './components/ItemForm';
 import { ItemList } from './components/ItemList';
-import { ScanList } from './components/ScanList';
 import { useItems } from './hooks/useItems';
 import './App.css';
 
@@ -10,7 +9,6 @@ function AppContent() {
   const { clearAll } = useItems();
   const { t } = useI18n();
   const [showClearModal, setShowClearModal] = useState(false);
-  const [showScanModal, setShowScanModal] = useState(false);
 
   const handleClearAll = async () => {
     await clearAll();
@@ -24,14 +22,6 @@ function AppContent() {
           <div className="app-header">
             <h1 className="app-header-title">Shopping List</h1>
             <div className="app-header-buttons">
-              <button 
-                onClick={() => setShowScanModal(true)}
-                className="app-header-button"
-                title={t('scan.title') || 'Scan List'}
-                aria-label={t('scan.title') || 'Scan List'}
-              >
-                <span className="material-symbols-outlined">camera_alt</span>
-              </button>
               <button 
                 onClick={() => setShowClearModal(true)}
                 className="app-header-button"
@@ -63,9 +53,6 @@ function AppContent() {
             </div>
           </div>
         </>
-      )}
-      {showScanModal && (
-        <ScanList onClose={() => setShowScanModal(false)} />
       )}
     </>
   );

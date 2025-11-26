@@ -31,21 +31,6 @@ export const translations = {
       noItems: 'No items',
       emptyState: 'No items yet. Add your first item!'
     },
-    scan: {
-      title: 'Scan Shopping List',
-      useCamera: 'Use Camera',
-      uploadPhoto: 'Upload Photo',
-      cancel: 'Cancel',
-      capture: 'Capture',
-      processing: 'Processing image...',
-      extractedItems: 'Extracted Items:',
-      addItems: 'Add Items',
-      rescan: 'Rescan',
-      noItemsFound: 'No items found. Try again with better lighting.',
-      tryAgain: 'Try Again',
-      cameraError: 'Could not access camera. Please check permissions.',
-      ocrError: 'Failed to process image. Please try again.'
-    },
     item: {
       quantity: 'Qty',
       category: 'Category'
@@ -239,21 +224,6 @@ export const translations = {
       clearAllConfirm: 'Listedeki tüm ürünleri temizlemek istediğinize emin misiniz?',
       noItems: 'Ürün yok',
       emptyState: 'Henüz ürün yok. İlk ürününüzü ekleyin!'
-    },
-    scan: {
-      title: 'Listeyi Tara',
-      useCamera: 'Kamera Kullan',
-      uploadPhoto: 'Fotoğraf Yükle',
-      cancel: 'İptal',
-      capture: 'Çek',
-      processing: 'Görüntü işleniyor...',
-      extractedItems: 'Çıkarılan Ürünler:',
-      addItems: 'Ürünleri Ekle',
-      rescan: 'Yeniden Tara',
-      noItemsFound: 'Ürün bulunamadı. Daha iyi ışıkla tekrar deneyin.',
-      tryAgain: 'Tekrar Dene',
-      cameraError: 'Kameraya erişilemedi. Lütfen izinleri kontrol edin.',
-      ocrError: 'Görüntü işlenemedi. Lütfen tekrar deneyin.'
     },
     item: {
       quantity: 'Miktar',
