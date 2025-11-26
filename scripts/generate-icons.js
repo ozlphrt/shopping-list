@@ -19,3 +19,4 @@ console.log('Icon generation requires PNG files.');
 console.log('Please add icon-192.png and icon-512.png to the public/ folder.');
 console.log('You can use: https://www.pwabuilder.com/imageGenerator');
 
+

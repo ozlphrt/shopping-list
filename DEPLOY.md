@@ -44,3 +44,4 @@
 - Firebase config must be set as GitHub Secrets
 - OpenAI API key is optional (only needed for OCR scanning)
 
+

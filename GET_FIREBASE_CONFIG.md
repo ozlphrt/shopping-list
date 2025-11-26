@@ -84,3 +84,4 @@ Firebase Console
 
 That's it! Once you have the config in `.env.local`, restart your dev server.
 
+

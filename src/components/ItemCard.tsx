@@ -20,9 +20,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
     notes: item.notes
   });
   const [swipeOffset, setSwipeOffset] = useState(0);
-  const [isSwiping, setIsSwiping] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
 
   // Sync editData when item changes
   useEffect(() => {
@@ -47,107 +45,149 @@ export const ItemCard = ({ item }: ItemCardProps) => {
     await deleteItem(item.id);
   };
 
-
-  const description = [item.quantity, item.notes].filter(Boolean).join(', ');
+  const handleDim = async () => {
+    await updateItem(item.id, { dimmed: !item.dimmed });
+  };
 
   const handleCardClick = (e: React.MouseEvent) => {
-    // Don't open edit if item is deleted, clicking on checkbox, or if we just swiped
-    if (item.deleted || (e.target as HTMLElement).closest('.item-card-checkbox-wrapper') || isSwiping) {
+    // Don't open edit if clicking on checkbox, delete button, or swipe backgrounds
+    if (
+      item.deleted ||
+      (e.target as HTMLElement).closest('.item-card-checkbox-wrapper') ||
+      (e.target as HTMLElement).closest('.item-card-delete-btn') ||
+      (e.target as HTMLElement).closest('.swipe-bg')
+    ) {
       return;
     }
     setIsEditing(true);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    // Disable swipe for deleted items
     if (item.deleted) return;
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
-    setIsSwiping(false);
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+      time: Date.now()
+    };
+    setSwipeOffset(0);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return;
-
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
-    const deltaX = touchX - touchStartX.current;
-    const deltaY = Math.abs(touchY - touchStartY.current);
-
-    // Only consider horizontal swipes (more horizontal than vertical)
-    if (Math.abs(deltaX) > deltaY && Math.abs(deltaX) > 10) {
-      setIsSwiping(true);
-      // Limit swipe distance
-      const maxSwipe = 150;
-      const limitedDelta = Math.max(-maxSwipe, Math.min(maxSwipe, deltaX));
-      setSwipeOffset(limitedDelta);
+    if (!touchStartRef.current) return;
+    const deltaX = e.touches[0].clientX - touchStartRef.current.x;
+    const deltaY = e.touches[0].clientY - touchStartRef.current.y;
+    
+    // Only track horizontal swipes
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      setSwipeOffset(deltaX);
     }
   };
 
   const handleTouchEnd = () => {
-    if (touchStartX.current === null) return;
-
+    if (!touchStartRef.current) return;
     const swipeThreshold = 80;
     
     if (swipeOffset > swipeThreshold) {
-      // Swipe right - complete
+      // Right swipe - mark as picked (checked)
       handleTogglePicked();
     } else if (swipeOffset < -swipeThreshold) {
-      // Swipe left - delete
+      // Left swipe - delete the item
       handleDelete();
     }
-
+    
     // Reset
     setSwipeOffset(0);
-    setIsSwiping(false);
-    touchStartX.current = null;
-    touchStartY.current = null;
+    touchStartRef.current = null;
   };
 
-  const getWrapperClassName = () => {
-    if (swipeOffset > 10) return 'item-card-wrapper swiping-right';
-    if (swipeOffset < -10) return 'item-card-wrapper swiping-left';
-    return 'item-card-wrapper';
+  const handleTouchCancel = () => {
+    setSwipeOffset(0);
+    touchStartRef.current = null;
   };
+
+  const swipeOpacity = Math.min(Math.abs(swipeOffset) / 100, 1);
+  const description = [item.quantity, item.notes].filter(Boolean).join(', ');
 
   return (
     <>
-      <div className={getWrapperClassName()}>
-        {!item.deleted && (
-          <div className="item-card-swipe-indicators">
-            <div className="item-card-swipe-indicator item-card-swipe-complete">
-              <span className="material-symbols-outlined">check_circle</span>
-            </div>
-            <div className="item-card-swipe-indicator item-card-swipe-delete">
-              <span className="material-symbols-outlined">close</span>
-            </div>
+      <div 
+        className={`item-card-row ${item.dimmed ? 'item-card-dimmed' : ''}`}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
+      >
+        {/* Red background with trash icon (left swipe) */}
+        {swipeOffset < -5 && (
+          <div 
+            className="swipe-bg swipe-bg-left"
+            style={{ opacity: swipeOpacity }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="swipe-icon">
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            </svg>
           </div>
         )}
-        <div 
-          className={`item-card ${item.picked ? 'item-card-picked' : ''} ${item.deleted ? 'item-card-deleted' : ''} ${isSwiping ? 'item-card-swiping' : ''}`}
-          onClick={handleCardClick}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          style={{ transform: `translateX(${swipeOffset}px)` }}
-        >
-          <div className="item-card-checkbox">
-            <div className="item-card-checkbox-wrapper">
-              <input
-                type="checkbox"
-                checked={item.picked}
-                onChange={handleTogglePicked}
-                disabled={item.deleted}
-              />
-            </div>
-            <div className="item-card-content">
-              <p className="item-card-name">{item.name}</p>
-              {description && (
-                <p className="item-card-description">{description}</p>
-              )}
-            </div>
+        {/* Green background with check icon (right swipe) */}
+        {swipeOffset > 5 && (
+          <div 
+            className="swipe-bg swipe-bg-right"
+            style={{ opacity: swipeOpacity }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="swipe-icon">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
           </div>
-          <div className="item-card-category-tag">{t(`categories.${item.category || 'Other'}`)}</div>
+        )}
+        {/* Content */}
+        <div
+          className="item-card-content-wrapper"
+          style={{ transform: `translateX(${swipeOffset}px)` }}
+          onClick={handleCardClick}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!item.deleted) {
+                handleTogglePicked();
+              }
+            }}
+            className={`item-card-checkbox-btn ${item.picked ? 'item-card-checkbox-checked' : 'item-card-checkbox-unchecked'} ${item.deleted ? 'item-card-checkbox-deleted' : ''}`}
+            disabled={item.deleted}
+          >
+            {item.deleted ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgb(239, 68, 68)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18" />
+                <path d="M6 6l12 12" />
+              </svg>
+            ) : item.picked ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            ) : null}
+          </button>
+          <span className={`item-card-name ${item.picked ? 'item-card-name-picked' : ''} ${item.dimmed ? 'item-card-name-dimmed' : ''}`}>
+            {item.name}
+          </span>
+          {!item.deleted && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete();
+              }}
+              className="item-card-delete-btn"
+              title={t('form.delete')}
+              aria-label={t('form.delete')}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 6h18" />
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
       {isEditing && (
@@ -200,4 +240,3 @@ export const ItemCard = ({ item }: ItemCardProps) => {
     </>
   );
 };
-

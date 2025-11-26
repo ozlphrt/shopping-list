@@ -30,3 +30,4 @@
 ## Note:
 The API key is only used for OCR scanning. All other features work without it.
 
+

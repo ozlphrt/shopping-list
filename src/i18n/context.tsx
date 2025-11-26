@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useRef, ReactNode } from 'react';
 import { translations, Language } from './translations';
 
 interface I18nContextType {
@@ -20,6 +20,9 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('language', lang);
   };
 
+  // Track missing translations to avoid console spam
+  const missingKeysRef = useRef<Set<string>>(new Set());
+
   const t = (key: string): string => {
     const keys = key.split('.');
     let value: any = translations[language];
@@ -27,7 +30,11 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     for (const k of keys) {
       value = value?.[k];
       if (value === undefined) {
-        console.warn(`Translation missing for key: ${key}`);
+        // Only warn once per missing key, and only in dev mode
+        if (!missingKeysRef.current.has(key) && import.meta.env.DEV) {
+          missingKeysRef.current.add(key);
+          console.warn(`Translation missing for key: ${key}`);
+        }
         return key;
       }
     }

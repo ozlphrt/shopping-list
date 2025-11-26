@@ -32,3 +32,4 @@ If you want to restrict access later, you can:
 - Use Firebase App Check
 - Or restrict by IP/domain
 
+

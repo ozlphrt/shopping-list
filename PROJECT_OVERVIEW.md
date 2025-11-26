@@ -50,3 +50,4 @@ items/{itemId}
 - Firebase Hosting (recommended)
 - Or any static hosting with PWA support
 
+

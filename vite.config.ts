@@ -8,6 +8,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      // Disable service worker in development to allow HMR to work
+      devOptions: {
+        enabled: false
+      },
       includeAssets: ['favicon.ico'],
       manifest: {
         name: 'Shopping List',
@@ -55,6 +59,11 @@ export default defineConfig({
         ]
       }
     })
-  ]
+  ],
+  server: {
+    hmr: {
+      overlay: true
+    }
+  }
 })
 

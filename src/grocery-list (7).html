@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#111827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Grocery List</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      overscroll-behavior-y: contain;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .min-h-screen { min-height: 100vh; }
+    .bg-gradient { background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #1f2937 100%); }
+    .flex { display: flex; }
+    .items-start { align-items: flex-start; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .flex-1 { flex: 1; }
+    .flex-shrink-0 { flex-shrink: 0; }
+    .w-full { width: 100%; }
+    .max-w-md { max-width: 28rem; }
+    .w-5 { width: 1.25rem; }
+    .h-5 { height: 1.25rem; }
+    .w-6 { width: 1.5rem; }
+    .h-6 { height: 1.5rem; }
+    .w-4 { width: 1rem; }
+    .h-4 { height: 1rem; }
+    .h-px { height: 1px; }
+    .p-2\.5 { padding: 0.625rem; }
+    .p-3 { padding: 0.75rem; }
+    .p-4 { padding: 1rem; }
+    .p-5 { padding: 1.25rem; }
+    .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .py-3\.5 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
+    .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-5 { margin-bottom: 1.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .space-y-2 > * + * { margin-top: 0.5rem; }
+    .space-y-4 > * + * { margin-top: 1rem; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .rounded-3xl { border-radius: 1.5rem; }
+    .border { border-width: 1px; }
+    .border-2 { border-width: 2px; }
+    .text-white { color: rgb(255 255 255); }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .text-xs { font-size: 0.75rem; line-height: 1rem; }
+    .text-base { font-size: 1rem; line-height: 1.5rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .font-light { font-weight: 300; }
+    .font-medium { font-weight: 500; }
+    .uppercase { text-transform: uppercase; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .text-center { text-align: center; }
+    .line-through { text-decoration: line-through; }
+    .shadow-2xl { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
+    .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+    .cursor-pointer { cursor: pointer; }
+    
+    /* Glass morphism */
+    .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); }
+    .glass-sm { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .border-glass { border-color: rgba(255, 255, 255, 0.1); }
+    .bg-glass-10 { background: rgba(255, 255, 255, 0.1); }
+    .bg-glass-15 { background: rgba(255, 255, 255, 0.15); }
+    .bg-glass-20 { background: rgba(255, 255, 255, 0.2); }
+    .bg-glass-25 { background: rgba(255, 255, 255, 0.25); }
+    .border-glass-20 { border-color: rgba(255, 255, 255, 0.2); }
+    .border-glass-30 { border-color: rgba(255, 255, 255, 0.3); }
+    .border-glass-40 { border-color: rgba(255, 255, 255, 0.4); }
+    .text-white-30 { color: rgba(255, 255, 255, 0.3); }
+    .text-white-40 { color: rgba(255, 255, 255, 0.4); }
+    .text-white-50 { color: rgba(255, 255, 255, 0.5); }
+    .opacity-0 { opacity: 0; }
+    .opacity-40 { opacity: 0.4; }
+    .opacity-100 { opacity: 1; }
+    .text-red-400 { color: rgb(248 113 113); }
+    .text-red-500 { color: rgb(239 68 68); }
+    .bg-white-10 { background: rgba(255, 255, 255, 0.1); }
+
+    /* Input */
+    input {
+      font-size: 16px;
+      outline: none;
+    }
+    input::placeholder { color: rgba(255, 255, 255, 0.3); }
+    input:focus { border-color: rgba(255, 255, 255, 0.3); }
+    
+    /* Button */
+    button { border: none; cursor: pointer; outline: none; user-select: none; }
+    .btn-add:hover { background: rgba(255, 255, 255, 0.2); }
+    .btn-add:active { background: rgba(255, 255, 255, 0.25); }
+    
+    /* Checkbox */
+    .checkbox { display: flex; align-items: center; justify-content: center; }
+    .checkbox-checked { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.3); }
+    .checkbox-unchecked:active { border-color: rgba(255, 255, 255, 0.4); }
+    
+    /* Item row */
+    .item-row { position: relative; transition: transform 150ms ease-out; overflow: hidden; touch-action: pan-y; }
+    .item-content { position: relative; z-index: 1; display: flex; align-items: center; gap: 0.75rem; }
+    .item-row:hover { background: rgba(255, 255, 255, 0.1); }
+    .item-row:active { background: rgba(255, 255, 255, 0.15); }
+    .item-row .delete-btn { opacity: 0; transition: opacity 150ms; }
+    .item-row:hover .delete-btn { opacity: 1; }
+    .delete-btn:hover { color: rgb(248 113 113); }
+    .delete-btn:active { color: rgb(239 68 68); }
+    
+    /* Swipe backgrounds */
+    .swipe-bg {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+      transition: opacity 150ms;
+    }
+    .swipe-bg-left {
+      left: 0;
+      background: linear-gradient(to right, rgb(239 68 68) 0%, rgba(239, 68, 68, 0.5) 100%);
+      justify-content: flex-start;
+      padding-left: 1.5rem;
+    }
+    .swipe-bg-right {
+      right: 0;
+      background: linear-gradient(to left, rgb(34 197 94) 0%, rgba(34, 197, 94, 0.5) 100%);
+      justify-content: flex-end;
+      padding-right: 1.5rem;
+    }
+    .swipe-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: white;
+    }
+
+    /* Responsive */
+    @media (min-width: 640px) {
+      .sm\:p-6 { padding: 1.5rem; }
+      .sm\:mt-8 { margin-top: 2rem; }
+      .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module">
+    import React, { useState, useRef, useEffect } from 'https://esm.sh/react@18.2.0';
+    import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
+
+    const Trash2 = ({ className }) => React.createElement('svg', {
+      xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24", fill: "none",
+      stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className
+    }, 
+      React.createElement('path', { d: "M3 6h18" }),
+      React.createElement('path', { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" }),
+      React.createElement('path', { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" }),
+      React.createElement('line', { x1: "10", x2: "10", y1: "11", y2: "17" }),
+      React.createElement('line', { x1: "14", x2: "14", y1: "11", y2: "17" })
+    );
+
+    const Plus = ({ className }) => React.createElement('svg', {
+      xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24", fill: "none",
+      stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className
+    },
+      React.createElement('path', { d: "M5 12h14" }),
+      React.createElement('path', { d: "M12 5v14" })
+    );
+
+    const Check = ({ className }) => React.createElement('svg', {
+      xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24", fill: "none",
+      stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className
+    },
+      React.createElement('path', { d: "M20 6 9 17l-5-5" })
+    );
+
+    const groceryDatabase = [{"tr":["çilek","cilek"],"en":["strawberry","strawberries","strwbery"],"category":"Produce"},{"tr":["üzüm","uzum"],"en":["grape","grapes"],"category":"Produce"},{"tr":["elma"],"en":["apple","apples"],"category":"Produce"},{"tr":["armut"],"en":["pear","pears"],"category":"Produce"},{"tr":["portakal"],"en":["orange","oranges"],"category":"Produce"},{"tr":["muz"],"en":["banana","bananas"],"category":"Produce"},{"tr":["kavun"],"en":["melon","cantaloupe"],"category":"Produce"},{"tr":["karpuz"],"en":["watermelon"],"category":"Produce"},{"tr":["şeftali","seftali"],"en":["peach","peaches"],"category":"Produce"},{"tr":["kiraz"],"en":["cherry","cherries"],"category":"Produce"},{"tr":["domates"],"en":["tomato","tomatoes"],"category":"Produce"},{"tr":["salatalık","salatalik"],"en":["cucumber","cucumbers"],"category":"Produce"},{"tr":["biber"],"en":["pepper","peppers","bell pepper"],"category":"Produce"},{"tr":["patlıcan","patlican"],"en":["eggplant","aubergine"],"category":"Produce"},{"tr":["kabak"],"en":["zucchini","courgette","squash"],"category":"Produce"},{"tr":["havuç","havuc"],"en":["carrot","carrots"],"category":"Produce"},{"tr":["patates"],"en":["potato","potatoes"],"category":"Produce"},{"tr":["soğan","sogan"],"en":["onion","onions"],"category":"Produce"},{"tr":["sarımsak","sarimsak"],"en":["garlic"],"category":"Produce"},{"tr":["marul"],"en":["lettuce"],"category":"Produce"},{"tr":["maydanoz"],"en":["parsley"],"category":"Produce"},{"tr":["dereotu"],"en":["dill"],"category":"Produce"},{"tr":["roka"],"en":["arugula","rocket"],"category":"Produce"},{"tr":["ıspanak","ispanak"],"en":["spinach"],"category":"Produce"},{"tr":["brokoli"],"en":["broccoli"],"category":"Produce"},{"tr":["karnabahar"],"en":["cauliflower"],"category":"Produce"},{"tr":["mantar"],"en":["mushroom","mushrooms"],"category":"Produce"},{"tr":["limon"],"en":["lemon","lemons"],"category":"Produce"},{"tr":["avokado"],"en":["avocado","avocados"],"category":"Produce"},{"tr":["tavuk"],"en":["chicken"],"category":"Meat & Seafood"},{"tr":["dana eti"],"en":["beef","veal"],"category":"Meat & Seafood"},{"tr":["kuzu eti"],"en":["lamb"],"category":"Meat & Seafood"},{"tr":["köfte","kofte"],"en":["meatball","meatballs","ground meat"],"category":"Meat & Seafood"},{"tr":["kıyma","kiyma"],"en":["ground beef","minced meat"],"category":"Meat & Seafood"},{"tr":["sosis"],"en":["sausage","sausages","hot dog"],"category":"Meat & Seafood"},{"tr":["sucuk"],"en":["sucuk","turkish sausage"],"category":"Meat & Seafood"},{"tr":["salam"],"en":["salami"],"category":"Meat & Seafood"},{"tr":["balık","balik"],"en":["fish"],"category":"Meat & Seafood"},{"tr":["ton balığı","ton baligi"],"en":["tuna"],"category":"Meat & Seafood"},{"tr":["levrek"],"en":["sea bass"],"category":"Meat & Seafood"},{"tr":["hamsi"],"en":["anchovy","anchovies"],"category":"Meat & Seafood"},{"tr":["karides"],"en":["shrimp","prawns"],"category":"Meat & Seafood"},{"tr":["süt","sut"],"en":["milk"],"category":"Dairy & Eggs"},{"tr":["yoğurt","yogurt"],"en":["yogurt","yoghurt"],"category":"Dairy & Eggs"},{"tr":["peynir"],"en":["cheese"],"category":"Dairy & Eggs"},{"tr":["beyaz peynir"],"en":["white cheese","feta"],"category":"Dairy & Eggs"},{"tr":["kaşar","kasar"],"en":["kashkaval","yellow cheese"],"category":"Dairy & Eggs"},{"tr":["tereyağı","tereyagi"],"en":["butter"],"category":"Dairy & Eggs"},{"tr":["margarin"],"en":["margarine"],"category":"Dairy & Eggs"},{"tr":["krema"],"en":["cream"],"category":"Dairy & Eggs"},{"tr":["yumurta"],"en":["egg","eggs"],"category":"Dairy & Eggs"},{"tr":["ayran"],"en":["ayran","yogurt drink"],"category":"Dairy & Eggs"},{"tr":["ekmek"],"en":["bread"],"category":"Bakery"},{"tr":["somun"],"en":["loaf","white bread"],"category":"Bakery"},{"tr":["tam buğday","tam bugday"],"en":["whole wheat","brown bread"],"category":"Bakery"},{"tr":["pide"],"en":["pita","flatbread"],"category":"Bakery"},{"tr":["simit"],"en":["simit","sesame bread"],"category":"Bakery"},{"tr":["açma","acma"],"en":["soft roll"],"category":"Bakery"},{"tr":["poğaça","pogaca"],"en":["pogaca","pastry"],"category":"Bakery"},{"tr":["börek","borek"],"en":["borek","pastry"],"category":"Bakery"},{"tr":["kek"],"en":["cake"],"category":"Bakery"},{"tr":["kurabiye"],"en":["cookie","cookies","biscuit"],"category":"Bakery"},{"tr":["dondurma"],"en":["ice cream"],"category":"Frozen Foods"},{"tr":["donmuş sebze","donmus sebze"],"en":["frozen vegetables"],"category":"Frozen Foods"},{"tr":["donmuş pizza","donmus pizza"],"en":["frozen pizza"],"category":"Frozen Foods"},{"tr":["buz"],"en":["ice"],"category":"Frozen Foods"},{"tr":["pirinç","pirinc"],"en":["rice"],"category":"Pantry & Canned"},{"tr":["makarna"],"en":["pasta","noodles"],"category":"Pantry & Canned"},{"tr":["bulgur"],"en":["bulgur","cracked wheat"],"category":"Pantry & Canned"},{"tr":["un"],"en":["flour"],"category":"Pantry & Canned"},{"tr":["şeker","seker"],"en":["sugar"],"category":"Pantry & Canned"},{"tr":["tuz"],"en":["salt"],"category":"Pantry & Canned"},{"tr":["karabiber"],"en":["black pepper","pepper"],"category":"Pantry & Canned"},{"tr":["zeytinyağı","zeytinyagi"],"en":["olive oil"],"category":"Pantry & Canned"},{"tr":["ayçiçek yağı","aycicek yagi"],"en":["sunflower oil"],"category":"Pantry & Canned"},{"tr":["sirke"],"en":["vinegar"],"category":"Pantry & Canned"},{"tr":["salça","salca"],"en":["tomato paste"],"category":"Pantry & Canned"},{"tr":["zeytin"],"en":["olive","olives"],"category":"Pantry & Canned"},{"tr":["konserve"],"en":["canned food","can"],"category":"Pantry & Canned"},{"tr":["fasulye"],"en":["beans"],"category":"Pantry & Canned"},{"tr":["nohut"],"en":["chickpea","chickpeas"],"category":"Pantry & Canned"},{"tr":["mercimek"],"en":["lentil","lentils"],"category":"Pantry & Canned"},{"tr":["bal"],"en":["honey"],"category":"Pantry & Canned"},{"tr":["reçel","recel"],"en":["jam"],"category":"Pantry & Canned"},{"tr":["fıstık ezmesi","fistik ezmesi"],"en":["peanut butter"],"category":"Pantry & Canned"},{"tr":["su"],"en":["water"],"category":"Beverages"},{"tr":["çay","cay"],"en":["tea"],"category":"Beverages"},{"tr":["kahve"],"en":["coffee"],"category":"Beverages"},{"tr":["meyve suyu"],"en":["juice","fruit juice"],"category":"Beverages"},{"tr":["portakal suyu"],"en":["orange juice"],"category":"Beverages"},{"tr":["kola"],"en":["cola","coke"],"category":"Beverages"},{"tr":["gazoz"],"en":["soda","carbonated drink"],"category":"Beverages"},{"tr":["bira"],"en":["beer"],"category":"Beverages"},{"tr":["şarap","sarap"],"en":["wine"],"category":"Beverages"},{"tr":["çikolata","cikolata"],"en":["chocolate"],"category":"Snacks & Sweets"},{"tr":["şeker","seker"],"en":["candy","sweet"],"category":"Snacks & Sweets"},{"tr":["cips"],"en":["chips","crisps"],"category":"Snacks & Sweets"},{"tr":["bisküvi","biskuvi"],"en":["biscuit","cracker"],"category":"Snacks & Sweets"},{"tr":["fındık","findik"],"en":["hazelnut","hazelnuts"],"category":"Snacks & Sweets"},{"tr":["fıstık","fistik"],"en":["pistachio","pistachios","peanut"],"category":"Snacks & Sweets"},{"tr":["badem"],"en":["almond","almonds"],"category":"Snacks & Sweets"},{"tr":["ceviz"],"en":["walnut","walnuts"],"category":"Snacks & Sweets"},{"tr":["deterjan"],"en":["detergent","laundry detergent"],"category":"Household & Cleaning"},{"tr":["bulaşık deterjanı","bulasik deterjani"],"en":["dish soap","dishwashing liquid"],"category":"Household & Cleaning"},{"tr":["çamaşır suyu","camasir suyu"],"en":["bleach"],"category":"Household & Cleaning"},{"tr":["kağıt havlu","kagit havlu"],"en":["paper towel","kitchen roll"],"category":"Household & Cleaning"},{"tr":["tuvalet kağıdı","tuvalet kagidi"],"en":["toilet paper"],"category":"Household & Cleaning"},{"tr":["peçete","pecete"],"en":["napkin","tissue"],"category":"Household & Cleaning"},{"tr":["çöp torbası","cop torbasi"],"en":["trash bag","garbage bag"],"category":"Household & Cleaning"},{"tr":["şampuan","sampuan"],"en":["shampoo"],"category":"Personal Care"},{"tr":["sabun"],"en":["soap"],"category":"Personal Care"},{"tr":["diş macunu","dis macunu"],"en":["toothpaste"],"category":"Personal Care"},{"tr":["diş fırçası","dis fircasi"],"en":["toothbrush"],"category":"Personal Care"},{"tr":["krem"],"en":["cream","lotion"],"category":"Personal Care"},{"tr":["tıraş kremi","tiras kremi"],"en":["shaving cream"],"category":"Personal Care"}];
+    const categoryOrder = ["Produce","Meat & Seafood","Dairy & Eggs","Bakery","Frozen Foods","Pantry & Canned","Beverages","Snacks & Sweets","Household & Cleaning","Personal Care"];
+
+    function normalizeTurkish(text) {
+      return text.toLowerCase().replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c');
+    }
+
+    function levenshteinDistance(str1, str2) {
+      const len1 = str1.length, len2 = str2.length, matrix = [];
+      for (let i = 0; i <= len1; i++) matrix[i] = [i];
+      for (let j = 0; j <= len2; j++) matrix[0][j] = j;
+      for (let i = 1; i <= len1; i++) {
+        for (let j = 1; j <= len2; j++) {
+          if (str1[i - 1] === str2[j - 1]) {
+            matrix[i][j] = matrix[i - 1][j - 1];
+          } else {
+            matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+          }
+        }
+      }
+      return matrix[len1][len2];
+    }
+
+    function similarityScore(str1, str2) {
+      const maxLen = Math.max(str1.length, str2.length);
+      if (maxLen === 0) return 1;
+      return 1 - levenshteinDistance(str1, str2) / maxLen;
+    }
+
+    function findBestMatch(input, groceryDatabase) {
+      const normalizedInput = normalizeTurkish(input.trim());
+      if (!normalizedInput) return null;
+      let bestMatch = null, bestScore = 0, threshold = 0.65;
+      groceryDatabase.forEach(item => {
+        item.tr.forEach(trWord => {
+          const score = similarityScore(normalizedInput, normalizeTurkish(trWord));
+          if (score > bestScore && score >= threshold) {
+            bestScore = score;
+            bestMatch = { text: trWord, category: item.category, score, language: 'tr' };
+          }
+        });
+        item.en.forEach(enWord => {
+          const score = similarityScore(normalizedInput, normalizeTurkish(enWord));
+          if (score > bestScore && score >= threshold) {
+            bestScore = score;
+            bestMatch = { text: enWord, category: item.category, score, language: 'en' };
+          }
+        });
+      });
+      return bestMatch;
+    }
+
+    function GroceryList() {
+      const [items, setItems] = useState([]);
+      const [inputValue, setInputValue] = useState('');
+      const [swipeState, setSwipeState] = useState({});
+      const inputRef = useRef(null);
+      const touchStartRef = useRef({});
+
+      useEffect(() => { inputRef.current?.focus(); }, []);
+
+      const addItem = () => {
+        if (inputValue.trim()) {
+          const match = findBestMatch(inputValue, groceryDatabase);
+          const newItem = {
+            id: Date.now(),
+            text: match ? match.text : inputValue,
+            category: match ? match.category : 'Other',
+            checked: false
+          };
+          setItems([...items, newItem]);
+          setInputValue('');
+          inputRef.current?.focus();
+        }
+      };
+
+      const toggleItem = (id) => setItems(items.map(item => item.id === id ? { ...item, checked: !item.checked } : item));
+      const deleteItem = (id) => setItems(items.filter(item => item.id !== id));
+      const handleKeyPress = (e) => { if (e.key === 'Enter') addItem(); };
+
+      const sortedItems = [...items].sort((a, b) => {
+        // First separate by dimmed status
+        if (a.dimmed !== b.dimmed) {
+          return a.dimmed ? 1 : -1;
+        }
+        // Then by checked status
+        if (a.checked !== b.checked) {
+          return a.checked ? 1 : -1;
+        }
+        // Finally by category
+        const categoryA = categoryOrder.indexOf(a.category);
+        const categoryB = categoryOrder.indexOf(b.category);
+        const indexA = categoryA === -1 ? categoryOrder.length : categoryA;
+        const indexB = categoryB === -1 ? categoryOrder.length : categoryB;
+        return indexA - indexB;
+      });
+
+      const groupedItems = sortedItems.reduce((acc, item) => {
+        if (!acc[item.category]) acc[item.category] = [];
+        acc[item.category].push(item);
+        return acc;
+      }, {});
+
+      const uncheckedCount = items.filter(item => !item.checked).length;
+
+      const getCategoryEmoji = (category) => ({
+        'Produce': '🥬', 'Meat & Seafood': '🍖', 'Dairy & Eggs': '🥛', 'Bakery': '🍞',
+        'Frozen Foods': '🧊', 'Pantry & Canned': '🥫', 'Beverages': '🥤', 'Snacks & Sweets': '🍫',
+        'Household & Cleaning': '🧹', 'Personal Care': '🧴', 'Other': '📦'
+      }[category] || '📦');
+
+      const handleTouchStart = (e, itemId) => {
+        touchStartRef.current[itemId] = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+          time: Date.now()
+        };
+        setSwipeState(prev => ({ ...prev, [itemId]: 0 }));
+      };
+
+      const handleTouchMove = (e, itemId) => {
+        if (!touchStartRef.current[itemId]) return;
+        const deltaX = e.touches[0].clientX - touchStartRef.current[itemId].x;
+        const deltaY = e.touches[0].clientY - touchStartRef.current[itemId].y;
+        
+        // Only track horizontal swipes
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          setSwipeState(prev => ({ ...prev, [itemId]: deltaX }));
+        }
+      };
+
+      const handleTouchEnd = (e, itemId) => {
+        if (!touchStartRef.current[itemId]) return;
+        const deltaX = swipeState[itemId] || 0;
+        const swipeThreshold = 80;
+        
+        if (deltaX > swipeThreshold) {
+          // Right swipe - mark as picked (checked)
+          toggleItem(itemId);
+        } else if (deltaX < -swipeThreshold) {
+          // Left swipe - mark as dimmed (out of stock)
+          setItems(items.map(item => 
+            item.id === itemId ? { ...item, dimmed: true } : item
+          ));
+        }
+        
+        // Reset
+        setSwipeState(prev => {
+          const newState = { ...prev };
+          delete newState[itemId];
+          return newState;
+        });
+        delete touchStartRef.current[itemId];
+      };
+
+      const handleTouchCancel = (itemId) => {
+        setSwipeState(prev => {
+          const newState = { ...prev };
+          delete newState[itemId];
+          return newState;
+        });
+        delete touchStartRef.current[itemId];
+      };
+
+      return React.createElement('div', { className: 'min-h-screen bg-gradient flex items-start justify-center p-4 sm:p-6' },
+        React.createElement('div', { className: 'w-full max-w-md mt-4 sm:mt-8' },
+          React.createElement('div', { className: 'glass rounded-3xl border border-glass shadow-2xl p-5 sm:p-6' },
+            React.createElement('div', { className: 'mb-5' },
+              React.createElement('h1', { className: 'text-2xl sm:text-3xl font-light text-white mb-2' }, 'Grocery List'),
+              items.length > 0 && React.createElement('p', { className: 'text-sm text-white-50' }, `${uncheckedCount} ${uncheckedCount === 1 ? 'item' : 'items'} remaining`)
+            ),
+            React.createElement('div', { className: 'mb-5 flex gap-2' },
+              React.createElement('input', {
+                ref: inputRef, type: 'text', value: inputValue,
+                onChange: (e) => setInputValue(e.target.value), onKeyPress: handleKeyPress,
+                placeholder: 'Add item...',
+                className: 'flex-1 glass-sm border border-glass rounded-xl px-4 py-3.5 text-white text-base transition-all'
+              }),
+              React.createElement('button', {
+                onClick: addItem,
+                className: 'glass-sm border border-glass rounded-xl px-4 transition-all btn-add'
+              }, React.createElement(Plus, { className: 'w-5 h-5 text-white' }))
+            ),
+            React.createElement('div', { className: 'space-y-4' },
+              items.length === 0 ? React.createElement('div', { className: 'text-center py-16 text-white-30 text-sm' }, 'Your list is empty') :
+              Object.entries(groupedItems).map(([category, categoryItems]) =>
+                React.createElement('div', { key: category, className: 'space-y-2' },
+                  React.createElement('div', { className: 'flex items-center gap-2 px-2' },
+                    React.createElement('span', { className: 'text-lg' }, getCategoryEmoji(category)),
+                    React.createElement('h3', { className: 'text-xs uppercase tracking-wider text-white-40 font-medium' }, category),
+                    React.createElement('div', { className: 'flex-1 h-px bg-white-10' })
+                  ),
+                  categoryItems.map(item => {
+                    const swipeOffset = swipeState[item.id] || 0;
+                    const swipeOpacity = Math.min(Math.abs(swipeOffset) / 100, 1);
+                    return React.createElement('div', { 
+                      key: item.id, 
+                      className: 'glass-sm border border-glass rounded-xl p-2.5 item-row' + (item.dimmed ? ' opacity-50' : ''),
+                      onTouchStart: (e) => handleTouchStart(e, item.id),
+                      onTouchMove: (e) => handleTouchMove(e, item.id),
+                      onTouchEnd: (e) => handleTouchEnd(e, item.id),
+                      onTouchCancel: () => handleTouchCancel(item.id)
+                    },
+                      // Red background with trash icon (left swipe)
+                      swipeOffset < -5 && React.createElement('div', { 
+                        className: 'swipe-bg swipe-bg-left',
+                        style: { opacity: swipeOpacity }
+                      }, React.createElement(Trash2, { className: 'swipe-icon' })),
+                      // Green background with check icon (right swipe)
+                      swipeOffset > 5 && React.createElement('div', { 
+                        className: 'swipe-bg swipe-bg-right',
+                        style: { opacity: swipeOpacity }
+                      }, React.createElement(Check, { className: 'swipe-icon' })),
+                      // Content
+                      React.createElement('div', {
+                        className: 'item-content',
+                        style: { transform: 'translateX(' + swipeOffset + 'px)' }
+                      },
+                        React.createElement('button', {
+                          onClick: () => toggleItem(item.id),
+                          className: 'flex-shrink-0 w-6 h-6 rounded-lg border-2 checkbox transition-all ' + (item.checked ? 'checkbox-checked' : 'border-glass-20 checkbox-unchecked')
+                        }, item.checked && React.createElement(Check, { className: 'w-4 h-4 text-white' })),
+                        React.createElement('span', { className: 'flex-1 text-white text-base transition-all ' + (item.checked ? 'line-through opacity-40' : '') + (item.dimmed ? ' opacity-30' : '') }, item.text),
+                        React.createElement('button', {
+                          onClick: () => deleteItem(item.id),
+                          className: 'text-white-50 delete-btn transition-all'
+                        }, React.createElement(Trash2, { className: 'w-4 h-4' }))
+                      )
+                    );
+                  })
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+
+    createRoot(document.getElementById('root')).render(React.createElement(GroceryList));
+  </script>
+</body>
+</html>

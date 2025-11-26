@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-bottom: 5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .item-list-loading {
@@ -13,46 +14,77 @@
   font-size: 1.1rem;
 }
 
-
-.item-list-category {
-  margin-bottom: 0;
+.item-list-header {
+  margin-bottom: 1.25rem;
 }
 
-.item-list-category-title {
-  font-size: 1.125rem;
-  font-weight: 700;
+.item-list-title {
+  font-size: 1.5rem;
+  font-weight: 300;
   color: #ffffff;
-  margin: 0;
-  padding: 0.75rem 1rem 0.25rem 1rem;
-  text-transform: none;
-  letter-spacing: -0.015em;
+  margin: 0 0 0.5rem 0;
   line-height: 1.2;
 }
 
-.item-list-items {
-  padding: 0 1rem 0.25rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+.item-list-count {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
 }
 
-.item-list-category-items {
-  padding: 0 1rem 0.25rem 1rem;
+.item-list-content {
+  /* No padding needed - container handles it */
+}
+
+.item-list-category {
+  margin-bottom: 0.75rem;
+}
+
+.item-list-category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0;
+  margin-bottom: 0.375rem;
+}
+
+.item-list-category-emoji {
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.item-list-category-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  line-height: 1;
+}
+
+.item-list-category-divider {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.item-list-items {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
 .item-list-empty-state {
   text-align: center;
-  padding: 3rem 1rem;
-  color: rgba(255, 255, 255, 0.6);
+  padding: 4rem 1rem;
+  color: rgba(255, 255, 255, 0.3);
   font-weight: 500;
+  font-size: 0.875rem;
 }
 
 .item-list-empty-state p {
   margin: 0;
-  font-size: 1.2rem;
 }
 
 .item-list-picked-section {
@@ -64,16 +96,34 @@
 
 .item-list-picked-title {
   opacity: 0.7;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .item-list-deleted-section {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-top: 0;
+  padding-bottom: 1rem;
+  border-top: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   opacity: 0.4;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .item-list-deleted-title {
   opacity: 0.5;
+  padding: 0.5rem 0;
+  margin-bottom: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
 }
 

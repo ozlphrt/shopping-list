@@ -20,7 +20,8 @@ export const translations = {
       cancel: 'Cancel',
       save: 'Save',
       delete: 'Delete',
-      deleteConfirm: 'Delete this item?'
+      deleteConfirm: 'Delete this item?',
+      create: 'Create'
     },
     list: {
       needed: 'Needed',
@@ -29,7 +30,31 @@ export const translations = {
       clearAll: 'Clear All',
       clearAllConfirm: 'Clear all items from the list?',
       noItems: 'No items',
-      emptyState: 'No items yet. Add your first item!'
+      emptyState: 'No items yet. Add your first item!',
+      share: 'Share List',
+      item: 'item',
+      items: 'items',
+      remaining: 'remaining',
+      myLists: 'My Lists',
+      createNew: 'Create New List',
+      listName: 'List name',
+      ownedLists: 'Owned Lists',
+      sharedLists: 'Shared With Me',
+      owner: 'Owner',
+      shared: 'Shared',
+      noLists: 'No lists yet. Create your first list!',
+      selectOrCreate: 'Select a list above or create a new one to get started.',
+      deleteListConfirm: 'Delete list?',
+      deleteListMessage: 'This will permanently delete this list and all its items. This action cannot be undone.'
+    },
+    share: {
+      title: 'Share List',
+      emailPlaceholder: 'Enter email address',
+      share: 'Share',
+      sharedWith: 'Shared with:',
+      noShares: 'No one yet',
+      remove: 'Remove access',
+      error: 'Failed to share list'
     },
     item: {
       quantity: 'Qty',
@@ -64,6 +89,7 @@ export const translations = {
       // Bakery subcategories
       bakery_bread: 'Bread',
       bakery_turkish_bread: 'Turkish Bread',
+      bakery_simit: 'Simit',
       bakery_flatbreads: 'Flatbreads',
       bakery_pastries: 'Pastries',
       bakery_cakes_pies: 'Cakes & Pies',
@@ -223,7 +249,31 @@ export const translations = {
       clearAll: 'Tümünü Temizle',
       clearAllConfirm: 'Listedeki tüm ürünleri temizlemek istediğinize emin misiniz?',
       noItems: 'Ürün yok',
-      emptyState: 'Henüz ürün yok. İlk ürününüzü ekleyin!'
+      emptyState: 'Henüz ürün yok. İlk ürününüzü ekleyin!',
+      share: 'Listeyi Paylaş',
+      item: 'ürün',
+      items: 'ürün',
+      remaining: 'kaldı',
+      myLists: 'Listelerim',
+      createNew: 'Yeni Liste Oluştur',
+      listName: 'Liste adı',
+      ownedLists: 'Sahip Olduğum Listeler',
+      sharedLists: 'Benimle Paylaşılanlar',
+      owner: 'Sahibi',
+      shared: 'Paylaşıldı',
+      noLists: 'Henüz liste yok. İlk listenizi oluşturun!',
+      selectOrCreate: 'Başlamak için yukarıdan bir liste seçin veya yeni bir liste oluşturun.',
+      deleteListConfirm: 'Listeyi sil?',
+      deleteListMessage: 'Bu liste ve içindeki tüm öğeler kalıcı olarak silinecek. Bu işlem geri alınamaz.'
+    },
+    share: {
+      title: 'Listeyi Paylaş',
+      emailPlaceholder: 'E-posta adresi girin',
+      share: 'Paylaş',
+      sharedWith: 'Paylaşılan:',
+      noShares: 'Henüz kimse yok',
+      remove: 'Erişimi kaldır',
+      error: 'Liste paylaşılamadı'
     },
     item: {
       quantity: 'Miktar',
@@ -258,6 +308,7 @@ export const translations = {
       // Bakery subcategories
       bakery_bread: 'Ekmek',
       bakery_turkish_bread: 'Türk Ekmeği',
+      bakery_simit: 'Simit',
       bakery_flatbreads: 'Yassı Ekmek',
       bakery_pastries: 'Hamur İşleri',
       bakery_cakes_pies: 'Kek & Pasta',

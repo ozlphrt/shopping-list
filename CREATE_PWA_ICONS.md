@@ -21,3 +21,4 @@ The vite-plugin-pwa will automatically:
 
 Once icons are added, the PWA will be fully functional!
 
+

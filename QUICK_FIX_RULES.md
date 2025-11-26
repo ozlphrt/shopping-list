@@ -41,3 +41,4 @@ Go to: https://console.firebase.google.com/project/shopping-list-1bb2c/firestore
 - Changed `if request.auth != null` to `if true`
 - This allows anyone to read/write (no authentication required)
 
+
