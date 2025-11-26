@@ -108,7 +108,7 @@ export const ItemCard = ({ item, listId }: ItemCardProps) => {
   return (
     <>
       <div 
-        className={`item-card-row ${item.dimmed ? 'item-card-dimmed' : ''}`}
+        className={`item-card-row ${item.dimmed ? 'item-card-dimmed' : ''} ${item.picked ? 'item-card-picked' : ''} ${item.deleted ? 'item-card-deleted' : ''}`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}

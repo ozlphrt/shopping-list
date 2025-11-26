@@ -26,7 +26,7 @@ export const translations = {
     list: {
       needed: 'Needed',
       picked: 'Picked',
-      deleted: 'Deleted',
+      deleted: 'Out of Stock',
       clearAll: 'Clear All',
       clearAllConfirm: 'Clear all items from the list?',
       noItems: 'No items',
@@ -245,7 +245,7 @@ export const translations = {
     list: {
       needed: 'Gerekli',
       picked: 'Alındı',
-      deleted: 'Silindi',
+      deleted: 'Stokta Yok',
       clearAll: 'Tümünü Temizle',
       clearAllConfirm: 'Listedeki tüm ürünleri temizlemek istediğinize emin misiniz?',
       noItems: 'Ürün yok',

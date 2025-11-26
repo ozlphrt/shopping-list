@@ -16,8 +16,14 @@
   opacity: 0.65;
 }
 
+.item-card-row.item-card-picked {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
 .item-card-row.item-card-deleted {
-  /* No dimming for deleted items */
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.2);
 }
 
 /* Swipe backgrounds */
@@ -140,8 +146,7 @@
 }
 
 .item-card-name-picked {
-  text-decoration: line-through;
-  /* No dimming for picked items */
+  /* No strike-through, no dimming for picked items */
 }
 
 .item-card-name-dimmed {
