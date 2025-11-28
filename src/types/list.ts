@@ -5,6 +5,7 @@ export interface ShoppingList {
   sharedWith: string[]; // Array of user email addresses who have access
   createdAt: Date;
   updatedAt: Date;
+  expirationTime?: Date; // Optional expiration time - list will be auto-deleted after this
 }
 
 

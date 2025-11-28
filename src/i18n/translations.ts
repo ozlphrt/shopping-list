@@ -66,7 +66,13 @@ export const translations = {
       noLists: 'No lists yet. Create your first list!',
       selectOrCreate: 'Select a list above or create a new one to get started.',
       deleteListConfirm: 'Delete list?',
-      deleteListMessage: 'This will permanently delete this list and all its items. This action cannot be undone.'
+      deleteListMessage: 'This will permanently delete this list and all its items. This action cannot be undone.',
+      removeFromView: 'Remove from my lists',
+      hideError: 'Failed to remove list from view',
+      expiresAfter: 'Expires after',
+      expiration1d: '1 day',
+      expiration7d: '7 days',
+      expiration30d: '30 days'
     },
     share: {
       title: 'Share List',
@@ -75,7 +81,9 @@ export const translations = {
       sharedWith: 'Shared with:',
       noShares: 'No one yet',
       remove: 'Remove access',
-      error: 'Failed to share list'
+      error: 'Failed to share list',
+      previousAddresses: 'Previously used:',
+      useAddress: 'Use this address'
     },
     item: {
       quantity: 'Qty',
@@ -306,7 +314,13 @@ export const translations = {
       noLists: 'Henüz liste yok. İlk listenizi oluşturun!',
       selectOrCreate: 'Başlamak için yukarıdan bir liste seçin veya yeni bir liste oluşturun.',
       deleteListConfirm: 'Listeyi sil?',
-      deleteListMessage: 'Bu liste ve içindeki tüm öğeler kalıcı olarak silinecek. Bu işlem geri alınamaz.'
+      deleteListMessage: 'Bu liste ve içindeki tüm öğeler kalıcı olarak silinecek. Bu işlem geri alınamaz.',
+      removeFromView: 'Listelerimden kaldır',
+      hideError: 'Liste görünümden kaldırılamadı',
+      expiresAfter: 'Süre sonu',
+      expiration1d: '1 gün',
+      expiration7d: '7 gün',
+      expiration30d: '30 gün'
     },
     share: {
       title: 'Listeyi Paylaş',
@@ -315,7 +329,9 @@ export const translations = {
       sharedWith: 'Paylaşılan:',
       noShares: 'Henüz kimse yok',
       remove: 'Erişimi kaldır',
-      error: 'Liste paylaşılamadı'
+      error: 'Liste paylaşılamadı',
+      previousAddresses: 'Daha önce kullanılan:',
+      useAddress: 'Bu adresi kullan'
     },
     item: {
       quantity: 'Miktar',

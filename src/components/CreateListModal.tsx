@@ -8,12 +8,21 @@ interface CreateListModalProps {
   onCreated?: (listId: string) => void;
 }
 
+type ExpirationOption = '1' | '7' | '30';
+
 export const CreateListModal = ({ onClose, onCreated }: CreateListModalProps) => {
   const { t } = useI18n();
   const { createList } = useLists();
   const [name, setName] = useState('');
+  const [expiration, setExpiration] = useState<ExpirationOption>('1');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const calculateExpirationTime = (option: ExpirationOption): Date => {
+    const now = new Date();
+    const days = parseInt(option);
+    return new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,8 +32,10 @@ export const CreateListModal = ({ onClose, onCreated }: CreateListModalProps) =>
     setLoading(true);
 
     try {
-      const listId = await createList(name.trim());
+      const expirationTime = calculateExpirationTime(expiration);
+      const listId = await createList(name.trim(), expirationTime);
       setName('');
+      setExpiration('1');
       onCreated?.(listId);
       onClose();
     } catch (err: any) {
@@ -55,6 +66,38 @@ export const CreateListModal = ({ onClose, onCreated }: CreateListModalProps) =>
             autoFocus
             disabled={loading}
           />
+          
+          <div className="create-list-expiration">
+            <label className="create-list-expiration-label">
+              {t('list.expiresAfter') || 'Expires after:'}
+            </label>
+            <div className="create-list-expiration-options">
+              <button
+                type="button"
+                onClick={() => setExpiration('1')}
+                className={`create-list-expiration-option ${expiration === '1' ? 'active' : ''}`}
+                disabled={loading}
+              >
+                {t('list.expiration1d') || '1 day'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setExpiration('7')}
+                className={`create-list-expiration-option ${expiration === '7' ? 'active' : ''}`}
+                disabled={loading}
+              >
+                {t('list.expiration7d') || '7 days'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setExpiration('30')}
+                className={`create-list-expiration-option ${expiration === '30' ? 'active' : ''}`}
+                disabled={loading}
+              >
+                {t('list.expiration30d') || '30 days'}
+              </button>
+            </div>
+          </div>
           
           {error && <div className="create-list-error">{error}</div>}
           

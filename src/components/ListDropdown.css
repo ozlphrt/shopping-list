@@ -121,6 +121,33 @@
   height: 1.1rem;
 }
 
+.list-dropdown-item-remove {
+  background: rgba(156, 163, 175, 0.2);
+  border: 1px solid rgba(156, 163, 175, 0.3);
+  border-radius: 0.5rem;
+  color: rgba(156, 163, 175, 1);
+  cursor: pointer;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.list-dropdown-item-remove:hover {
+  background: rgba(156, 163, 175, 0.3);
+  border-color: rgba(156, 163, 175, 0.5);
+}
+
+.list-dropdown-item-remove .material-symbols-outlined {
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
 .list-dropdown-item-name {
   flex: 1;
   font-weight: 500;

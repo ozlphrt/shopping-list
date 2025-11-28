@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { collection, query, onSnapshot, addDoc, updateDoc, doc, Timestamp, where } from 'firebase/firestore';
+import { collection, query, onSnapshot, addDoc, updateDoc, doc, Timestamp, where, deleteDoc } from 'firebase/firestore';
 import { db, auth } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ShoppingList } from '../types/list';
@@ -159,13 +159,24 @@ export const useLists = () => {
           const data = docSnap.data();
           // STRICT check: only include if this list is actually owned by the user
           if (data.ownerId === userId) {
+            // Check if list is expired
+            const expirationTime = data.expirationTime?.toDate();
+            if (expirationTime && expirationTime < new Date()) {
+              // Auto-delete expired list (only owner can delete)
+              deleteDoc(doc(db, 'lists', docSnap.id)).catch(err => {
+                console.error(`[useLists] Error deleting expired list ${docSnap.id}:`, err);
+              });
+              return; // Skip adding to lists
+            }
+            
             const list: ShoppingList = {
               id: docSnap.id,
               name: data.name,
               ownerId: data.ownerId,
               sharedWith: data.sharedWith || [],
               createdAt: data.createdAt?.toDate() || new Date(),
-              updatedAt: data.updatedAt?.toDate() || new Date()
+              updatedAt: data.updatedAt?.toDate() || new Date(),
+              expirationTime: expirationTime
             };
             ownedLists.push(list);
           } else {
@@ -204,13 +215,22 @@ export const useLists = () => {
           const isNotOwner = data.ownerId !== userId;
           
           if (isNotOwner && isShared) {
+            // Check if list is expired
+            const expirationTime = data.expirationTime?.toDate();
+            if (expirationTime && expirationTime < new Date()) {
+              // Auto-delete expired list (only if user has permission)
+              // Note: Only owner can delete, but we can still filter it out
+              return; // Skip adding to lists
+            }
+            
             const list: ShoppingList = {
               id: docSnap.id,
               name: data.name,
               ownerId: data.ownerId,
               sharedWith: data.sharedWith || [],
               createdAt: data.createdAt?.toDate() || new Date(),
-              updatedAt: data.updatedAt?.toDate() || new Date()
+              updatedAt: data.updatedAt?.toDate() || new Date(),
+              expirationTime: expirationTime
             };
             sharedLists.push(list);
           } else {
@@ -280,16 +300,23 @@ export const useLists = () => {
     };
   }, []);
 
-  const createList = useCallback(async (name: string): Promise<string> => {
+  const createList = useCallback(async (name: string, expirationTime?: Date): Promise<string> => {
     if (!auth.currentUser) throw new Error('User must be authenticated');
     
-    const docRef = await addDoc(collection(db, 'lists'), {
+    const listData: any = {
       name,
       ownerId: auth.currentUser.uid,
       sharedWith: [],
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now()
-    });
+    };
+    
+    // Add expiration time if provided
+    if (expirationTime) {
+      listData.expirationTime = Timestamp.fromDate(expirationTime);
+    }
+    
+    const docRef = await addDoc(collection(db, 'lists'), listData);
     
     return docRef.id;
   }, []);

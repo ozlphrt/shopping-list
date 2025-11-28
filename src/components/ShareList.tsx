@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useI18n } from '../i18n/context';
 import { useLists } from '../hooks/useLists';
+import { usePreviousAddresses } from '../hooks/usePreviousAddresses';
 import { auth } from '../config/firebase';
 import './ShareList.css';
 
@@ -12,11 +13,19 @@ interface ShareListProps {
 export const ShareList = ({ listId, onClose }: ShareListProps) => {
   const { t } = useI18n();
   const { lists, shareList, unshareList } = useLists();
+  const { previousAddresses, addAddress } = usePreviousAddresses();
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const currentList = lists.find(l => l.id === listId);
+
+  // Filter out addresses that are already shared with this list
+  const availableSuggestions = useMemo(() => {
+    if (!currentList) return [];
+    const sharedEmails = currentList.sharedWith.map(e => e.toLowerCase());
+    return previousAddresses.filter(addr => !sharedEmails.includes(addr));
+  }, [previousAddresses, currentList]);
 
   const handleShare = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,13 +35,20 @@ export const ShareList = ({ listId, onClose }: ShareListProps) => {
     setLoading(true);
 
     try {
-      await shareList(listId, email.trim().toLowerCase());
+      const normalizedEmail = email.trim().toLowerCase();
+      await shareList(listId, normalizedEmail);
+      // Save to previous addresses (non-blocking)
+      await addAddress(normalizedEmail);
       setEmail('');
     } catch (err: any) {
       setError(err.message || t('share.error') || 'Failed to share list');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSuggestionClick = (suggestedEmail: string) => {
+    setEmail(suggestedEmail);
   };
 
   const handleUnshare = async (emailToRemove: string) => {
@@ -81,6 +97,29 @@ export const ShareList = ({ listId, onClose }: ShareListProps) => {
           </form>
 
           {error && <div className="share-error">{error}</div>}
+
+          {availableSuggestions.length > 0 && (
+            <div className="share-suggestions">
+              <div className="share-suggestions-title">
+                {t('share.previousAddresses') || 'Previously used:'}
+              </div>
+              <div className="share-suggestions-list">
+                {availableSuggestions.map((suggestedEmail) => (
+                  <button
+                    key={suggestedEmail}
+                    type="button"
+                    onClick={() => handleSuggestionClick(suggestedEmail)}
+                    className="share-suggestion-item"
+                    disabled={loading}
+                    title={t('share.useAddress') || `Use ${suggestedEmail}`}
+                  >
+                    <span className="material-symbols-outlined share-suggestion-icon">history</span>
+                    <span className="share-suggestion-email">{suggestedEmail}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="share-list">
             <h4 className="share-list-title">{t('share.sharedWith') || 'Shared with:'}</h4>

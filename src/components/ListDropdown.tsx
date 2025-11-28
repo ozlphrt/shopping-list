@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useI18n } from '../i18n/context';
 import { ShoppingList } from '../types/list';
 import { auth } from '../config/firebase';
+import { useHiddenLists } from '../hooks/useHiddenLists';
 import './ListDropdown.css';
 
 interface ListDropdownProps {
@@ -20,13 +21,18 @@ export const ListDropdown = ({
   loading = false 
 }: ListDropdownProps) => {
   const { t } = useI18n();
+  const { hiddenListIds, hideList } = useHiddenLists();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const currentUser = auth.currentUser;
 
   // Filter lists to only show ones the user owns or is shared on
+  // Also filter out hidden lists
   const filteredLists = lists.filter(list => {
     if (!currentUser) return false;
+    
+    // Don't show hidden lists
+    if (hiddenListIds.includes(list.id)) return false;
     
     const normalizedUserEmail = currentUser.email?.toLowerCase() || '';
     const normalizedSharedWith = (list.sharedWith || []).map((email: string) => email.toLowerCase());
@@ -175,6 +181,35 @@ export const ListDropdown = ({
     }
   };
 
+  const handleHideList = async (e: React.MouseEvent, listId: string) => {
+    e.stopPropagation();
+    const list = lists.find(l => l.id === listId);
+    if (!list || !currentUser) return;
+
+    // Only allow hiding shared lists (not owned lists)
+    if (list.ownerId === currentUser.uid) {
+      return; // Can't hide owned lists
+    }
+
+    try {
+      await hideList(listId);
+      // If the hidden list was currently selected, select first available list or null
+      if (currentListId === listId) {
+        // Find first available list (owned or shared, not hidden)
+        const availableList = filteredLists.find(l => l.id !== listId);
+        if (availableList) {
+          onSelectList(availableList.id);
+        } else {
+          // No other lists available, will be handled by App.tsx auto-selection
+          onSelectList('');
+        }
+      }
+    } catch (error: any) {
+      console.error('Error hiding list:', error);
+      alert(t('list.hideError') || 'Failed to remove list from view');
+    }
+  };
+
   if (loading) {
     return null;
   }
@@ -226,16 +261,28 @@ export const ListDropdown = ({
                     {t('list.sharedLists') || 'Shared With Me'}
                   </div>
                   {sharedLists.map(list => (
-                    <button
+                    <div
                       key={list.id}
-                      onClick={() => handleSelectList(list.id)}
-                      className={`list-dropdown-item ${currentListId === list.id ? 'list-dropdown-item-active' : ''}`}
+                      className={`list-dropdown-item-wrapper ${currentListId === list.id ? 'list-dropdown-item-active' : ''}`}
                     >
-                      <span className="list-dropdown-item-name">{list.name}</span>
-                      <span className="list-dropdown-item-badge list-dropdown-item-badge-shared">
-                        {t('list.shared') || 'Shared'}
-                      </span>
-                    </button>
+                      <button
+                        onClick={() => handleSelectList(list.id)}
+                        className="list-dropdown-item"
+                      >
+                        <span className="list-dropdown-item-name">{list.name}</span>
+                        <span className="list-dropdown-item-badge list-dropdown-item-badge-shared">
+                          {t('list.shared') || 'Shared'}
+                        </span>
+                      </button>
+                      <button
+                        onClick={(e) => handleHideList(e, list.id)}
+                        className="list-dropdown-item-remove"
+                        title={t('list.removeFromView') || 'Remove from my lists'}
+                        aria-label={t('list.removeFromView') || 'Remove from my lists'}
+                      >
+                        <span className="material-symbols-outlined">visibility_off</span>
+                      </button>
+                    </div>
                   ))}
                 </div>
               )}
