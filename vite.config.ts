@@ -12,7 +12,7 @@ export default defineConfig({
       devOptions: {
         enabled: false
       },
-      includeAssets: ['favicon.ico'],
+      includeAssets: [],
       manifest: {
         name: 'Shopping List',
         short_name: 'Shopping',
@@ -25,13 +25,13 @@ export default defineConfig({
         scope: process.env.NODE_ENV === 'production' ? '/shopping-list/' : '/',
         icons: [
           {
-            src: '/192.png',
+            src: '192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable'
           },
           {
-            src: '/512.png',
+            src: '512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
