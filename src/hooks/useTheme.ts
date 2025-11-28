@@ -118,6 +118,35 @@ export const useTheme = () => {
     }
   };
 
-  return { currentPalette, setTheme, loading, palettes: colorPalettes };
+  const toggleDarkLight = async () => {
+    const isDark = currentPalette.id === 'dark' || 
+                   (currentPalette.id !== 'light' && 
+                    currentPalette.id !== 'light-blue' && 
+                    currentPalette.id !== 'light-purple' && 
+                    currentPalette.id !== 'light-green');
+    
+    if (isDark) {
+      // Switch to light theme
+      await setTheme('light');
+    } else {
+      // Switch to dark theme
+      await setTheme('dark');
+    }
+  };
+
+  const isDarkMode = currentPalette.id === 'dark' || 
+                     (currentPalette.id !== 'light' && 
+                      currentPalette.id !== 'light-blue' && 
+                      currentPalette.id !== 'light-purple' && 
+                      currentPalette.id !== 'light-green');
+
+  return { 
+    currentPalette, 
+    setTheme, 
+    loading, 
+    palettes: colorPalettes,
+    toggleDarkLight,
+    isDarkMode
+  };
 };
 

@@ -74,6 +74,25 @@ export const translations = {
       expiration7d: '7 days',
       expiration30d: '30 days'
     },
+    notification: {
+      listShared: 'New List Shared',
+      dismiss: 'Dismiss'
+    },
+    theme: {
+      switchToLight: 'Switch to Light Mode',
+      switchToDark: 'Switch to Dark Mode'
+    },
+    pwa: {
+      updateAvailable: 'Update Available',
+      updateMessage: 'A new version is available. Update now?',
+      update: 'Update',
+      later: 'Later',
+      installTitle: 'Install App',
+      installMessage: 'Install this app on your device for a better experience',
+      install: 'Install',
+      dismiss: 'Dismiss',
+      offline: 'You are offline'
+    },
     share: {
       title: 'Share List',
       emailPlaceholder: 'Enter email address',
@@ -321,6 +340,25 @@ export const translations = {
       expiration1d: '1 gün',
       expiration7d: '7 gün',
       expiration30d: '30 gün'
+    },
+    notification: {
+      listShared: 'Yeni Liste Paylaşıldı',
+      dismiss: 'Kapat'
+    },
+    theme: {
+      switchToLight: 'Açık Temaya Geç',
+      switchToDark: 'Koyu Temaya Geç'
+    },
+    pwa: {
+      updateAvailable: 'Güncelleme Mevcut',
+      updateMessage: 'Yeni bir sürüm mevcut. Şimdi güncellemek ister misiniz?',
+      update: 'Güncelle',
+      later: 'Sonra',
+      installTitle: 'Uygulamayı Yükle',
+      installMessage: 'Daha iyi bir deneyim için bu uygulamayı cihazınıza yükleyin',
+      install: 'Yükle',
+      dismiss: 'Kapat',
+      offline: 'İnternet bağlantınız yok'
     },
     share: {
       title: 'Listeyi Paylaş',

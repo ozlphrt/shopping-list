@@ -140,16 +140,16 @@ export const colorPalettes: ColorPalette[] = [
       primary: 'rgba(34, 197, 94, 1)', // Green
       secondary: 'rgba(239, 68, 68, 1)', // Red
       accent: 'rgba(59, 130, 246, 1)', // Blue
-      background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%)',
-      surface: 'rgba(255, 255, 255, 0.95)',
-      text: '#0f172a',
-      cardBackground: 'rgba(255, 255, 255, 0.95)',
-      cardBorder: 'rgba(0, 0, 0, 0.15)',
-      cardHover: 'rgba(0, 0, 0, 0.08)',
+      background: '#ffffff',
+      surface: 'rgba(255, 255, 255, 1)',
+      text: '#000000',
+      cardBackground: 'rgba(243, 244, 246, 1)', // Grey background for cards
+      cardBorder: 'rgba(0, 0, 0, 0.5)',
+      cardHover: 'rgba(0, 0, 0, 0.2)',
       inputBackground: 'rgba(255, 255, 255, 1)',
-      inputBorder: 'rgba(0, 0, 0, 0.2)',
+      inputBorder: 'rgba(0, 0, 0, 0.6)',
       modalBackground: 'rgba(255, 255, 255, 1)',
-      modalOverlay: 'rgba(0, 0, 0, 0.5)',
+      modalOverlay: 'rgba(0, 0, 0, 0.7)',
     },
   },
   {
@@ -159,16 +159,16 @@ export const colorPalettes: ColorPalette[] = [
       primary: 'rgba(59, 130, 246, 1)', // Blue
       secondary: 'rgba(239, 68, 68, 1)', // Red
       accent: 'rgba(14, 165, 233, 1)', // Sky Blue
-      background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #eff6ff 100%)',
-      surface: 'rgba(255, 255, 255, 0.95)',
-      text: '#1e40af',
-      cardBackground: 'rgba(255, 255, 255, 0.95)',
-      cardBorder: 'rgba(30, 64, 175, 0.25)',
-      cardHover: 'rgba(30, 64, 175, 0.1)',
+      background: '#ffffff',
+      surface: 'rgba(255, 255, 255, 1)',
+      text: '#0c1220',
+      cardBackground: 'rgba(243, 244, 246, 1)', // Grey background for cards
+      cardBorder: 'rgba(30, 64, 175, 0.6)',
+      cardHover: 'rgba(30, 64, 175, 0.25)',
       inputBackground: 'rgba(255, 255, 255, 1)',
-      inputBorder: 'rgba(30, 64, 175, 0.3)',
+      inputBorder: 'rgba(30, 64, 175, 0.7)',
       modalBackground: 'rgba(255, 255, 255, 1)',
-      modalOverlay: 'rgba(30, 64, 175, 0.4)',
+      modalOverlay: 'rgba(30, 64, 175, 0.65)',
     },
   },
   {
@@ -178,16 +178,16 @@ export const colorPalettes: ColorPalette[] = [
       primary: 'rgba(168, 85, 247, 1)', // Purple
       secondary: 'rgba(236, 72, 153, 1)', // Pink
       accent: 'rgba(139, 92, 246, 1)', // Violet
-      background: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #faf5ff 100%)',
-      surface: 'rgba(255, 255, 255, 0.95)',
-      text: '#6b21a8',
-      cardBackground: 'rgba(255, 255, 255, 0.95)',
-      cardBorder: 'rgba(107, 33, 168, 0.25)',
-      cardHover: 'rgba(107, 33, 168, 0.1)',
+      background: '#ffffff',
+      surface: 'rgba(255, 255, 255, 1)',
+      text: '#3b0764',
+      cardBackground: 'rgba(243, 244, 246, 1)', // Grey background for cards
+      cardBorder: 'rgba(107, 33, 168, 0.6)',
+      cardHover: 'rgba(107, 33, 168, 0.25)',
       inputBackground: 'rgba(255, 255, 255, 1)',
-      inputBorder: 'rgba(107, 33, 168, 0.3)',
+      inputBorder: 'rgba(107, 33, 168, 0.7)',
       modalBackground: 'rgba(255, 255, 255, 1)',
-      modalOverlay: 'rgba(107, 33, 168, 0.4)',
+      modalOverlay: 'rgba(107, 33, 168, 0.65)',
     },
   },
   {
@@ -197,16 +197,16 @@ export const colorPalettes: ColorPalette[] = [
       primary: 'rgba(34, 197, 94, 1)', // Green
       secondary: 'rgba(239, 68, 68, 1)', // Red
       accent: 'rgba(20, 184, 166, 1)', // Teal
-      background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%)',
-      surface: 'rgba(255, 255, 255, 0.95)',
-      text: '#14532d',
-      cardBackground: 'rgba(255, 255, 255, 0.95)',
-      cardBorder: 'rgba(20, 83, 45, 0.25)',
-      cardHover: 'rgba(20, 83, 45, 0.1)',
+      background: '#ffffff',
+      surface: 'rgba(255, 255, 255, 1)',
+      text: '#052e16',
+      cardBackground: 'rgba(243, 244, 246, 1)', // Grey background for cards
+      cardBorder: 'rgba(20, 83, 45, 0.6)',
+      cardHover: 'rgba(20, 83, 45, 0.25)',
       inputBackground: 'rgba(255, 255, 255, 1)',
-      inputBorder: 'rgba(20, 83, 45, 0.3)',
+      inputBorder: 'rgba(20, 83, 45, 0.7)',
       modalBackground: 'rgba(255, 255, 255, 1)',
-      modalOverlay: 'rgba(20, 83, 45, 0.4)',
+      modalOverlay: 'rgba(20, 83, 45, 0.65)',
     },
   },
 ];
@@ -226,6 +226,9 @@ export const applyColorPalette = (palette: ColorPalette) => {
   root.style.setProperty('--color-input-border', palette.colors.inputBorder);
   root.style.setProperty('--color-modal-background', palette.colors.modalBackground);
   root.style.setProperty('--color-modal-overlay', palette.colors.modalOverlay);
+  
+  // Set data attribute for theme-specific CSS
+  root.setAttribute('data-theme', palette.id);
   
   // Store in localStorage for persistence
   localStorage.setItem('colorPalette', palette.id);

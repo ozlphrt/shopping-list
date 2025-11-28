@@ -119,6 +119,22 @@
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Light theme checkbox visibility */
+:root[data-theme="light"] .item-card-checkbox-unchecked,
+:root[data-theme="light-blue"] .item-card-checkbox-unchecked,
+:root[data-theme="light-purple"] .item-card-checkbox-unchecked,
+:root[data-theme="light-green"] .item-card-checkbox-unchecked {
+  border-color: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 1);
+}
+
+:root[data-theme="light"] .item-card-checkbox-btn:hover,
+:root[data-theme="light-blue"] .item-card-checkbox-btn:hover,
+:root[data-theme="light-purple"] .item-card-checkbox-btn:hover,
+:root[data-theme="light-green"] .item-card-checkbox-btn:hover {
+  border-color: rgba(0, 0, 0, 0.8);
+}
+
 .item-card-checkbox-deleted {
   border-color: rgb(239, 68, 68);
   background: rgba(239, 68, 68, 0.3);

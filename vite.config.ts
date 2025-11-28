@@ -23,7 +23,20 @@ export default defineConfig({
         orientation: 'portrait',
         start_url: process.env.NODE_ENV === 'production' ? '/shopping-list/' : '/',
         scope: process.env.NODE_ENV === 'production' ? '/shopping-list/' : '/',
-        icons: []
+        icons: [
+          {
+            src: '/192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any maskable'
+          },
+          {
+            src: '/512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          }
+        ]
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
@@ -54,6 +67,38 @@ export default defineConfig({
               cacheableResponse: {
                 statuses: [0, 200]
               }
+            }
+          },
+          {
+            // Cache Firebase Firestore requests for offline support
+            urlPattern: /^https:\/\/.*\.firestore\.googleapis\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'firestore-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 // 1 day
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              },
+              networkTimeoutSeconds: 3
+            }
+          },
+          {
+            // Cache Firebase Auth requests
+            urlPattern: /^https:\/\/.*\.firebaseapp\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'firebase-auth-cache',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 // 1 hour
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              },
+              networkTimeoutSeconds: 3
             }
           }
         ]

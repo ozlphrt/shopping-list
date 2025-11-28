@@ -9,9 +9,14 @@ import { ShareList } from './components/ShareList';
 import { ListDropdown } from './components/ListDropdown';
 import { CreateListModal } from './components/CreateListModal';
 import { CleanupButton } from './components/CleanupButton';
+import { NotificationToast } from './components/NotificationToast';
+import { PWAUpdatePrompt } from './components/PWAUpdatePrompt';
+import { PWAInstallPrompt } from './components/PWAInstallPrompt';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { useItems } from './hooks/useItems';
 import { useLists } from './hooks/useLists';
 import { useTheme } from './hooks/useTheme';
+import { useNotifications } from './hooks/useNotifications';
 import { auth, db } from './config/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, deleteDoc } from 'firebase/firestore';
@@ -32,7 +37,8 @@ function AppContent() {
   
   const { lists, loading: listsLoading, hasOrphanedLists } = useLists();
   const { clearAll } = useItems(currentListId);
-  useTheme(); // Initialize theme
+  const { inAppNotification, dismissNotification } = useNotifications(lists);
+  const { toggleDarkLight, isDarkMode } = useTheme(); // Initialize theme
 
   useEffect(() => {
     let mounted = true;
@@ -205,6 +211,16 @@ function AppContent() {
               >
                 <span className="material-symbols-outlined">delete</span>
               </button>
+              <button 
+                onClick={toggleDarkLight}
+                className="app-header-button app-header-button-theme"
+                title={isDarkMode ? (t('theme.switchToLight') || 'Switch to Light Mode') : (t('theme.switchToDark') || 'Switch to Dark Mode')}
+                aria-label={isDarkMode ? (t('theme.switchToLight') || 'Switch to Light Mode') : (t('theme.switchToDark') || 'Switch to Dark Mode')}
+              >
+                <span className="material-symbols-outlined">
+                  {isDarkMode ? 'light_mode' : 'dark_mode'}
+                </span>
+              </button>
               <Auth currentList={currentList} />
             </div>
           </div>
@@ -287,6 +303,15 @@ function AppContent() {
           </div>
         </>
       )}
+      <NotificationToast
+        show={inAppNotification.show}
+        message={inAppNotification.message}
+        listName={inAppNotification.listName}
+        onDismiss={dismissNotification}
+      />
+      <PWAUpdatePrompt />
+      <PWAInstallPrompt />
+      <OfflineIndicator />
     </>
   );
 }
