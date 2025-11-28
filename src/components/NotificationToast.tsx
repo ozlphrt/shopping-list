@@ -11,7 +11,6 @@ interface NotificationToastProps {
 export const NotificationToast = ({ 
   show, 
   message, 
-  listName,
   onDismiss 
 }: NotificationToastProps) => {
   const { t } = useI18n();
