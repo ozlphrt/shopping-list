@@ -87,10 +87,11 @@ export const translations = {
       updateMessage: 'A new version is available. Update now?',
       update: 'Update',
       later: 'Later',
-      installTitle: 'Install App',
-      installMessage: 'Install this app on your device for a better experience',
+      installTitle: 'Install Shopping List',
+      installMessage: 'Install this app for quick access, offline support, and a better shopping experience',
+      installBenefits: 'Get faster access, work offline, and sync your lists across devices',
       install: 'Install',
-      dismiss: 'Dismiss',
+      dismiss: 'Not now',
       offline: 'You are offline'
     },
     share: {
@@ -354,10 +355,11 @@ export const translations = {
       updateMessage: 'Yeni bir sürüm mevcut. Şimdi güncellemek ister misiniz?',
       update: 'Güncelle',
       later: 'Sonra',
-      installTitle: 'Uygulamayı Yükle',
-      installMessage: 'Daha iyi bir deneyim için bu uygulamayı cihazınıza yükleyin',
+      installTitle: 'Alışveriş Listesini Yükle',
+      installMessage: 'Hızlı erişim, çevrimdışı destek ve daha iyi bir alışveriş deneyimi için uygulamayı yükleyin',
+      installBenefits: 'Daha hızlı erişim, çevrimdışı çalışma ve listelerinizi cihazlar arasında senkronize edin',
       install: 'Yükle',
-      dismiss: 'Kapat',
+      dismiss: 'Şimdi değil',
       offline: 'İnternet bağlantınız yok'
     },
     share: {

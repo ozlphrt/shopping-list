@@ -81,10 +81,13 @@ export const PWAInstallPrompt = () => {
         </div>
         <div className="pwa-install-prompt-text">
           <div className="pwa-install-prompt-title">
-            {t('pwa.installTitle') || 'Install App'}
+            {t('pwa.installTitle') || 'Install Shopping List'}
           </div>
           <div className="pwa-install-prompt-message">
-            {t('pwa.installMessage') || 'Install this app on your device for a better experience'}
+            {t('pwa.installMessage') || 'Install this app for quick access, offline support, and a better shopping experience'}
+          </div>
+          <div className="pwa-install-prompt-benefits">
+            {t('pwa.installBenefits') || 'Get faster access, work offline, and sync your lists across devices'}
           </div>
         </div>
         <div className="pwa-install-prompt-actions">
